@@ -1,0 +1,174 @@
+---
+title: "Wastewater"
+output: html_document
+date: "2023-06-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Load Data
+
+```{r}
+
+rm(list = ls())
+
+library(ggplot2)
+library(gridExtra)
+library(plotly)
+library(readr)
+library(rgdal)
+library(sp)
+library(plyr)
+library(purrr)
+library(tidyr)
+library(dplyr)
+library(maptools)
+
+
+
+wastewater <- read.csv("/Users/ruchita/Documents/Harvard/Lab/Wastewater/Full Text Extraction.csv", header = TRUE)
+wastewater <- as.data.frame(wastewater)
+
+```
+
+Global Distribution of Studies
+
+```{r}
+library(ggthemes)
+library(viridis)
+library(RColorBrewer)
+
+wastewater_map <- table(wastewater$Country)
+wastewater_map <- as.data.frame(wastewater_map)
+colnames(wastewater_map) <- c("region","value")
+
+WorldData <- map_data('world') %>% filter(region != "Antarctica") %>% fortify
+
+p <- ggplot() +
+    geom_map(data = WorldData, map = WorldData,
+                  aes(x = long, y = lat, group = group, map_id=region),
+                  fill = "#d9d9d9", colour = "white", size=0.1) + 
+    geom_map(data = wastewater_map, map=WorldData,
+                  aes(fill=value, map_id=region),
+                  colour="white", size=0.1) +
+    coord_map("rectangular", lat0=0, xlim=c(-180,180), ylim=c(-60, 90)) +
+    scale_fill_continuous(low="thistle2", high="darkred", guide="colorbar") +
+    scale_y_continuous(breaks=c()) +
+    scale_x_continuous(breaks=c()) +
+    labs(fill="Number of Studies", title="Global Distribution of Studies", x="", y="") + theme_map()
+p 
+
+
+
+```
+
+Distribution of Studies by Year
+
+```{r}
+
+ggplot(wastewater, aes(x = wastewater$Year.of.Publication.Posting.for.Preprints)) + geom_histogram() + xlab("Year") + ylab("Count") 
+
+```
+
+
+Distribution of Bucket A vs Not Bucket A
+
+```{r}
+
+
+table(wastewater$Buckets.A.vs.Not.Bucket.A)
+
+Bucket_A <- 87
+
+Not_Bucket_A <- 69
+
+
+
+Buckets <- c("Bucket A", "Not Bucket A")
+
+Count <- c(Bucket_A, Not_Bucket_A)
+
+Bucket_Graph <- cbind(Buckets,Count)
+
+Bucket_Graph <- as.data.frame(Bucket_Graph)
+
+Bucket_Graph$Count <- as.numeric(as.character(Bucket_Graph$Count))
+
+ggplot(data=Bucket_Graph, aes(x=Buckets, y=Count)) +
+  geom_bar(stat="identity")
+
+```
+
+Distribution of Explicit vs Implicit*
+
+```{r}
+Equity<- table(wastewater$Implicit.Explicit.mention.of.Health.Equity)
+Equity<- as.data.frame(Equity)
+colnames(Equity) <- c("Equity","Count")
+
+ggplot(data=Equity, aes(x=Equity, y=Count)) +
+  geom_bar(stat="identity")
+```
+
+Primary Outcomes Considered
+
+```{r}
+
+#Unstratified
+Outcomes <- table(wastewater$General.Primary.Outcome)
+Outcomes<- as.data.frame(Outcomes)
+colnames(Outcomes) <- c("Outcomes","Count")
+
+p<- ggplot(data=Outcomes, aes(x=Outcomes, y=Count)) +
+  geom_bar(stat="identity") + ggtitle("Overall")
+
+p1 <- p + theme(axis.text.x = element_text(angle = 90))
+
+#By Bucket A 
+
+Bucket_A_outcomes <- wastewater$General.Primary.Outcome[which(wastewater$Buckets.A.vs.Not.Bucket.A == "Bucket A")]
+Not_Bucket_A_outcomes <- wastewater$General.Primary.Outcome[which(wastewater$Buckets.A.vs.Not.Bucket.A == "Not Bucket A")]
+
+Outcomes_A <- table(Bucket_A_outcomes)
+Outcomes_A<- as.data.frame(Outcomes_A)
+colnames(Outcomes_A) <- c("Outcomes","Count")
+
+p<- ggplot(data=Outcomes_A, aes(x=Outcomes, y=Count)) +
+  geom_bar(stat="identity")+ ggtitle("Bucket A")
+
+p2 <- p + theme(axis.text.x = element_text(angle = 90))
+
+Outcomes_No_A <- table(Not_Bucket_A_outcomes)
+Outcomes_No_A<- as.data.frame(Outcomes_No_A)
+colnames(Outcomes_No_A) <- c("Outcomes","Count")
+
+p<- ggplot(data=Outcomes_No_A, aes(x=Outcomes, y=Count)) +
+  geom_bar(stat="identity") + ggtitle("Not Bucket A")
+
+p3 <- p + theme(axis.text.x = element_text(angle = 90))
+
+grid.arrange(p1,p2,p3, nrow = 1)
+
+ggsave(p4, plot = Primary_Outcomes, path = "/Users/ruchita/Documents/Harvard/Lab/Wastewater")
+
+```
+
+Not Bucket A Analysis
+
+
+```{r}
+
+not_bucket_a <- read.csv("/Users/ruchita/Documents/Harvard/Lab/Wastewater/Second Not Bucket A Extraction.csv", header = TRUE)
+
+table(not_bucket_a$Implicit.Explicit.mention.of.Health.Equity)
+
+```
+
+
+
+
+
+
