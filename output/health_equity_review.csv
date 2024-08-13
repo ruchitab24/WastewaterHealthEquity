@@ -1,0 +1,180 @@
+id,authors,year,country,title,empirical_study,motivation_health_equity,primary_theme,secondary_theme,targets,spatial_scale
+37,Choi et al.,2019,Australia,"Social, demographic, and economic correlates of food and chemical consumption measured by wastewater-based epidemiology",Yes,Yes,Descriptive Epi/Prevalence Est.,Representativeness,"Illicit Drug Use,
+Prescription Drugs,
+Diet/Nutritional Markers,
+Lifestyle/Behavioral",WWTP
+7,Krizman et al.,2016,Croatia,Wastewater-based assessment of regional and temporal consumption patternsof illicit drugs and therapeutic opioids in Croatia,Yes,Yes,Descriptive Epi/Prevalence Est.,Feasibility,"Illicit Drug Use,
+Prescription Drugs",WWTP
+4,Thomaidis et al.,2016,Greece,Reflection of Socioeconomic Changes in Wastewater: Licit and Illicit DrugUse Patterns,Yes,Yes,Descriptive Epi/Prevalence Est.,None,"Illicit Drug Use,
+Prescription Drugs,
+Pharmaceuticals/Personal Care Products (PPCP)",WWTP
+2,Zhang et al.,2019,China,"Wastewater-based epidemiology in Beijing, China: Prevalence of antibiotic use in flu season and association of pharmaceuticals and personal care products with socioeconomic characteristics",Yes,No,Descriptive Epi/Prevalence Est.,Representativeness,"Antibiotics/Resistance,
+Pharmaceuticals/Personal Care Products (PPCP)",WWTP
+28,Lai et al.,2013,Australia,Using quantitative wastewater analysis to measure daily usage ofconventional and emerging illicit drugs at an annual music festival,Yes,Yes,Descriptive Epi/Prevalence Est.,Ethics & Social Considerations,Illicit Drug Use,WWTP
+30,Endo et al.,2020,USA,Rapid Assessment of Opioid Exposure and Treatment in Cities ThroughRobotic Collection and Chemical Analysis of Wastewater,Yes,Yes,Descriptive Epi/Prevalence Est.,Feasibility,"Illicit Drug Use,
+Prescription Drugs",Neighborhood/ Maintenance hole
+11,Ahmed et al.,2023,Australia,National Wastewater Reconnaissance of Analgesic Consumption in Australia,Yes,Yes,Descriptive Epi/Prevalence Est.,None,"Prescription Drugs,
+Pharmaceuticals/Personal Care Products (PPCP)",WWTP
+42,Rousis et al.,2022,Australia,"Socioeconomic status and public health in Australia: A
+wastewater-based study",Yes,Yes,Descriptive Epi/Prevalence Est.,Representativeness,"Prescription Drugs,
+Pharmaceuticals/Personal Care Products (PPCP),
+Biomarkers/Metabolites",WWTP
+52,Haak et al.,2022,USA,Spatial and temporal variability and data bias in wastewater surveillance of SARS-CoV-2 in a sewer system,Yes,No,Descriptive Epi/Prevalence Est.,Representativeness,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole"
+46,Barbosa et al.,2022,Brazil,"One-year surveillance of SARS-CoV-2 in wastewater from vulnerable urban communities in metropolitan São Paulo, Brazil",Yes,Yes,Descriptive Epi/Prevalence Est.,Feasibility,SARS-CoV-2,"Upstream Location
+Neighborhood/ Maintenance hole"
+34,Lancaster et al.,2022,USA,"Socioeconomic status correlations with confirmed COVID-19 cases and
+SARS-CoV-2 wastewater concentrations in small-medium
+sized communities",Yes,Yes,Descriptive Epi/Prevalence Est.,Representativeness,SARS-CoV-2,WWTP
+1,Courjon et al.,2021,France,"COVID-19 patients age, comorbidity profiles and clinical presentation related to the SARS-CoV-2 UK-variant spread in the Southeast of France",Yes,No,Descriptive Epi/Prevalence Est.,None,SARS-CoV-2,WWTP
+53,Kuhn et al.,2022,USA,Predicting COVID-19 cases in diverse population groups using SARS-CoV-2 wastewater monitoring across Oklahoma City,Yes,No,Descriptive Epi/Prevalence Est.,Feasibility,SARS-CoV-2,Neighborhood/ Maintenance hole
+3,Price et al.,2021,New Zealand,"Spatial, temporal and socioeconomic patterns of illicit drug use in NewZealand assessed using wastewater-based epidemiology timed to coincidewith the census",Yes,Yes,Descriptive Epi/Prevalence Est.,Representativeness,Illicit Drug Use,WWTP
+8,Daglioglu et al.,2020,Turkey,Comparison of community illicit drug use in 11 cities of Turkey throughwastewater-based epidemiology,Yes,No,Descriptive Epi/Prevalence Est.,None,Illicit Drug Use,WWTP
+67,Yang et al.,2022,Australia,A nationwide wastewater-based assessment of metformin consumption across Australia,Yes,Yes,Descriptive Epi/Prevalence Est.,Feasibility,Prescription Drugs,WWTP
+9,Shao et al.,2022,China,Evaluation of eight psychoactive drugs used in Chinese cities bywastewater-based epidemiology,Yes,Yes,Descriptive Epi/Prevalence Est.,None,Prescription Drugs,WWTP
+6,Li et al.,2022,China,Young population consume twice as much artificial sweetener than thegeneral population - A wastewater-based assessment in China,Yes,No,Descriptive Epi/Prevalence Est.,None,Artificial Sweeteners,"WWTP
+Upstream Location"
+45,Ahmed et al.,2020,Australia,Wastewater-based estimation of the prevalence of gout in Australia,Yes,Yes,Descriptive Epi/Prevalence Est.,None,Biomarkers/Metabolites,WWTP
+55,Charles et al.,2022,Singapore,"Prevalence and characterization of antibiotic resistant bacteria in raw
+community sewage from diverse urban communities",Yes,No,Descriptive Epi/Prevalence Est.,None,Antibiotics/Resistance,Building Level
+38,Daughton,2012,NA,"Using biomarkers in sewage to monitor community-wide human health:
+Isoprostanes as conceptual prototype",No,No,Frameworks,Representativeness,"Biomarkers/Metabolites,
+Stress Hormones","WWTP
+Upstream Location"
+57,Daughton,2018,NA,"Monitoring wastewater for assessing community health: Sewage
+Chemical-Information Mining (SCIM)",No,Yes,Frameworks,Feasibility,"Diet/Nutritional Markers,
+Stress Hormones,
+Biomarkers/Metabolites,
+Lifestyle/Behavioral",WWTP
+20,Adhikari et al.,2022,NA,"Opportunities and limits of wastewater-c epidemiology for tracking
+global health and attainment of UN sustainable development goals",No,Yes,Frameworks,Feasibility,5+ Targets,WWTP
+61,Keshaviah et al.,2021,USA,Developing a Flexible National Wastewater Surveillance System for COVID-19 and Beyond,No,No,Frameworks,Ethics & Social Considerations,"SARS-CoV-2,
+Other Infectious Diseases,
+Illicit Drug Use,
+Biomarkers/Metabolites","WWTP
+Upstream Location"
+40,Prado et al.,2023,Latin America,"Wastewater-based epidemiology for preventing outbreaks and epidemics in
+Latin America – Lessons from the past and a look to the future",No,Yes,Frameworks,Feasibility,"SARS-CoV-2,
+Other Infectious Diseases,
+Antibiotics/Resistance","WWTP
+Upstream Location
+Neighborhood/ Maintenance hole
+Building Level"
+22,Donia et al.,2021,NA,COVID-19 Crisis Creates Opportunity towards Global Monitoring & Surveillance,No,Yes,Frameworks,Feasibility,"SARS-CoV-2,
+Metagenomics","WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+64,Thompson et al.,2020,NA,Making waves: Wastewater surveillance of SARS-CoV-2 for population-based health management,No,Yes,Frameworks,Ethics & Social Considerations,"SARS-CoV-2,
+Other Infectious Diseases","WWTP
+Neighborhood/ Maintenance hole
+Upstream Location"
+23,Erickson et al.,2021,NA,"""Waste Not, Want Not"" - Leveraging Sewer Systems and Wastewater-BasedEpidemiology for Drug Use Trends and Pharmaceutical Monitoring",No,No,Frameworks,Feasibility,"Illicit Drug Use,
+Pharmaceuticals/Personal Care Products (PPCP),
+Environmental Toxins","WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+14,Kasprzyk-Hordern et al.,2023,NA,Wastewater-based epidemiology for the assessment of population exposure tochemicals: The need for integration with human biomonitoring for globalOne Health actions,No,No,Frameworks,Feasibility,5+ Targets,WWTP
+68,Kasprzyk-Hordern et al.,2022,NA,Wastewater-based epidemiology in hazard forecasting and early-warning systems for global health risks,No,Yes,Frameworks,Feasibility,"Antibiotics/Resistance,
+Other Infectious Diseases,
+Biomarkers/Metabolites,
+Environmental Toxins",WWTP
+66,Wu et al.,2022,NA,Making waves: Wastewater surveillance of SARS-CoV-2 in an endemic future,No,Yes,Frameworks,None,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+51,Goncalves et al.,2022,NA,"Centralized and decentralized wastewater-based epidemiology to infer
+COVID-19 transmission – A brief review",No,Yes,Frameworks,Feasibility,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole
+Building Level"
+31,Gwenzi,2022,NA,"Wastewater, waste, and water-based epidemiology (WWW-BE): A novel hypothesis and decision-support tool to unravel COVID-19 in low-income settings?",No,Yes,Frameworks,Feasibility,SARS-CoV-2,"WWTP
+Building Level"
+26,Sharara et al.,2021,NA,Wastewater network infrastructure in public health: Applications andlearnings from the COVID-19 pandemic,No,Yes,Frameworks,Feasibility,SARS-CoV-2,"Neighborhood/ Maintenance hole
+WWTP
+Building Level"
+12,Chaudhuri et al.,2023,India,"Building health system resilience and pandemic preparedness usingwastewater-based epidemiology from SARS-CoV-2 monitoring in Bengaluru,India",Yes,Yes,Frameworks,Feasibility,SARS-CoV-2,"Upstream Location
+WWTP"
+58,Dawadi et al.,2022,Nepal,"Understanding COVID-19 Situation in Nepal and
+Implications for SARS-CoV-2 Transmission and
+Management",Yes,No,Frameworks,Feasibility,SARS-CoV-2,"WWTP
+Upstream Location"
+39,Haque et al.,2022,Bangladesh,Wastewater surveillance of SARS-CoV-2 in Bangladesh:Opportunities and challenges,No,Yes,Frameworks,Feasibility,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole"
+36,Medina et al.,2022,USA,The need of an environmental justice approach for wastewater based epidemiology for rural and disadvantaged communities: A review in California,No,Yes,Frameworks,Ethics & Social Considerations,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole"
+62,Pandey et al.,2021,NA,SARS-CoV-2 in wastewater: Challenges for developing countries,No,Yes,Frameworks,Feasibility,SARS-CoV-2,"WWTP
+Upstream Location"
+15,Travis et al.,2021,USA,"Providing a Safe, In-Person, Residential College Experience During the COVID-19 Pandemic",Yes,Yes,Frameworks,Feasibility,SARS-CoV-2,Building Level
+17,van Dyken et al.,2014,Australia,Monitoring substance use in prisons: Assessing the potential value ofwastewater analysis,Yes,No,Feasibility,Ethics & Social Considerations,"Illicit Drug Use,
+Prescription Drugs",Building Level
+59,Driver et al.,2022,USA,"Implementing wastewater monitoring on American Indian reservations to
+assess community health indicators",Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,"Illicit Drug Use,
+Prescription Drugs","Neighborhood/ Maintenance hole
+Upstream Location"
+60,Jarvie et al.,2023,USA,Monitoring of COVID-19 in wastewater across the Eastern Upper Peninsula of Michigan,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Upstream Location
+Building Level"
+54,Layton et al.,2022,USA,Evaluation of a Wastewater-Based Epidemiological Approach to Estimate the Prevalence of SARS-CoV-2 Infections and the Detection of Viral Variants in Disparate Oregon Communities at City and Neighborhood Scales,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole"
+47,Bueno et al.,2022,Brazil,Wastewater-based epidemiology: A Brazilian SARS-COV-2 surveillance experience,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole"
+44,Murni et al.,2022,Indonesia,The feasibility of SARS-CoV-2 surveillance using wastewater and environmental sampling in Indonesia,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole"
+19,Acosta et al.,2022,Canada,Longitudinal SARS-CoV-2 RNA wastewater monitoring across a range of scales correlates with total and regional COVID-19 burden in a well-defined urban population,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole"
+65,Wehrendt et al.,2021,Argentina,A rapid and simple protocol for concentration of SARS-CoV-2 from sewage,Yes,No,Feasibility,None,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole"
+48,D'Aoust et al.,2021,Canada,COVID-19 wastewater surveillance in rural communities: Comparison of lagoon and pumping station samples,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Upstream Location"
+24,Mota et al.,2021,Brazil,Assessing spatial distribution of COVID-19 prevalence in Brazil using decentralised sewage monitoring,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole"
+16,Yeager et al.,2021,USA,Wastewater Sample Site Selection to Estimate Geographically ResolvedCommunity Prevalence of COVID-19: A Sampling Protocol Perspective,Yes,Yes,Feasibility,Representativeness,SARS-CoV-2,"WWTP
+Upstream Location
+Neighborhood/ Maintenance hole"
+43,Jakariya et al.,2022,Bangladesh,Wastewater-based epidemiological surveillance to monitor the prevalence of SARS-CoV-2 in developing countries with onsite sanitation facilities,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"Upstream Location
+Neighborhood/ Maintenance hole
+Building Level"
+35,McQuade et al.,2023,Bangladesh,"Real-time sewage surveillance for SARS-CoV-2 in Dhaka,
+Bangladesh versus clinical COVID-19 surveillance:
+a longitudinal environmental surveillance study
+(December, 2019–December, 2021)",Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,"Upstream Location
+Neighborhood/ Maintenance hole"
+21,Ali et al.,2022,Ethiopia,Community Wastewater-Based Surveillance Can Be a Cost-Effective Approach to Track COVID-19 Outbreak in Low-Resource Settings: Feasibility Assessment for Ethiopia Context,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,WWTP
+29,Pico-Tomàs et al.,2023,Spain,Surveillance of SARS-CoV-2 in sewage from buildings housing residents withdifferent vulnerability levels,Yes,Yes,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,Building Level
+18,Fielding-Miller et al.,2023,USA,Safer at school early alert: an observational study of wastewater andsurface monitoring to detect COVID-19 in elementary schools,Yes,Yes,Feasibility,Frameworks,SARS-CoV-2,Building Level
+13,Chigwechokha et al.,2022,LMICs,Advancing the Use of Fecal Sludge for Timelier and Better-Quality Epidemiological Data in Low- and Middle-Income Countries for Pandemic Prevention,No,Yes,Feasibility,None,SARS-CoV-2,Upstream Location
+5,Li et al.,2022,USA,"Surveillance of SARS-CoV-2 in nine neighborhood sewersheds in DetroitTri-County area, United States: Assessing per capita SARS-CoV-2estimations and COVID-19 incidence",Yes,No,Feasibility,Descriptive Epi/Prevalence Est.,SARS-CoV-2,Neighborhood/ Maintenance hole
+41,Prichard et al.,2014,NA,"Sewage epidemiology and illicit drug research: The development of
+ethical research guidelines",No,Yes,Ethics & Social Considerations,None,Illicit Drug Use,"WWTP
+Building Level"
+32,Hall et al.,2012,NA,An analysis of ethical issues in using wastewater analysis to monitor illicit drug use,No,Yes,Ethics & Social Considerations,None,Illicit Drug Use,"WWTP
+Building Level"
+49,Doorn,2022,NA,Wastewater research and surveillance: an ethical exploration,No,Yes,Ethics & Social Considerations,None,5+ Targets,"Neighborhood/ Maintenance hole
+WWTP"
+63,Ram et al.,2023,NA,Ethical and Legal wastewater surveillance,No,Yes,Ethics & Social Considerations,None,"SARS-CoV-2,
+Illicit Drug Use,
+Diet/Nutritional Markers","WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+56,Coffman et al.,2021,NA,Preventing Scientific and Ethical Misuse of Wastewater Surveillance Data,No,Yes,Ethics & Social Considerations,Representativeness,"SARS-CoV-2,
+Illicit Drug Use,
+Other Infectious Diseases,
+Lifestyle/Behavioral","WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+10,LaJoie et al.,2022,USA,Nationwide public perceptions regarding the acceptance of using wastewaterfor community health monitoring in the United States,Yes,Yes,Ethics & Social Considerations,None,5+ Targets,"WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+33,Hrudey et al.,2021,NA,Ethics Guidance for Environmental Scientists Engaged in Surveillance of Wastewater for SARS-CoV‑2,No,Yes,Ethics & Social Considerations,None,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+50,Gable et al.,2020,NA,Legal and ethical implications of wastewater monitoring of SARS-CoV-2 for COVID-19 surveillance,No,Yes,Ethics & Social Considerations,None,SARS-CoV-2,"WWTP
+Neighborhood/ Maintenance hole
+Building Level"
+27,Tscharke et al.,2019,Australia,Harnessing the Power of the Census: Characterizing Wastewater TreatmentPlant Catchment Populations for Wastewater-Based Epidemiology,Yes,Yes,Representativeness,Feasibility,NA,WWTP
+25,Hart et al.,2020,USA,"Simulated 2017 nationwide sampling at 13,940 major U.S. sewage treatmentplants to assess seasonal population bias in wastewater-based epidemiology",Yes,Yes,Representativeness,Feasibility,"Pharmaceuticals/Personal Care Products (PPCP),
+Stress Hormones,
+Biomarkers/Metabolites",WWTP

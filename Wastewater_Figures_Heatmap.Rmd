@@ -1,0 +1,350 @@
+---
+title: "Wastewater Health Equity Review Heatmap"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library('rairtable')
+library("tidyverse")
+library("glue")
+library("ggimage")
+library("ggh4x")
+library("ggtext")
+
+library("knitr")
+library("kableExtra")
+library("flextable")
+library("officer")
+
+set_flextable_defaults(
+  font.family = "Arial",
+  font.size = 8, 
+  table.layout = "autofit")
+
+'%ni%' <- negate(`%in%`)
+```
+
+# Loading Data
+```{r}
+# Read in Database
+at <- readRDS(here("data", "final_dataset.rds"))
+
+# Unnest list columns (spatial scales and targets)
+at_targets <- at %>% dplyr::select(id, authors, year, empirical_study, motivation_health_equity, 
+                                   primary_theme, secondary_theme, multi_target, targets) %>%
+  unnest(., "targets")
+
+at_scale <- at %>% dplyr::select(id, authors, year, empirical_study, motivation_health_equity, 
+                                 primary_theme, secondary_theme, spatial_scale) %>%
+  unnest(., "spatial_scale")
+```
+
+
+# Heatmap
+
+```{r fig.height=12, fig.width=9, message=FALSE, warning=FALSE}
+# Setting Plot Preferences
+colors_repeat <- TRUE # Should colors repeat within the plot panels?
+n_cols <- 5 # How many colors
+random <- TRUE # should colors be selected at random order?
+save_heatmap <- TRUE # Save Heatmap?
+
+# Random For Finding Plot colors
+r_seed <- 5950
+set.seed(r_seed)
+
+# Based on preferences set palette
+if(colors_repeat==TRUE){add <- 0; pal <- pals::tol.rainbow(n_cols)}
+if(colors_repeat==FALSE){add <- 4; pal <- pals::tol.rainbow(n_cols*2)}
+if(random == TRUE){pal <- sample(pal)}
+
+
+# Overall Totals by Primary Theme
+tab_all <- at %>% group_by(var = "Overall", value = "All", primary_theme) %>% summarise(n_studies = n()) %>% ungroup() %>% 
+  complete(primary_theme, nesting(var, value)) %>% 
+  arrange(desc(n_studies)) 
+
+theme_order <- tab_all$primary_theme # Setting order for primary themes in facets
+
+# Prepping variables for heatmap
+study_list <- at %>% arrange(year)%>% 
+  mutate(study = paste(authors, year), 
+         primary_theme = factor(primary_theme, levels = theme_order, ordered = TRUE)) %>%
+  group_by(study) %>%
+  mutate(study = case_when(n() == 1 ~ study, 
+                           n() > 1 & row_number() == 1 ~ paste0(study, "-A"),
+                           n() > 1 & row_number() == 2 ~ paste0(study, "-B"))) %>% ungroup() %>% 
+  mutate(year_cat = ifelse(year<2020, "2012-2019", "2020-2023"),
+         mult = ifelse(multi_scale %in% c("Single Scale"), "No", "Yes"),
+         mult_targ = ifelse(multi_target %in% c("Single Target"), "No", "Yes")) %>%
+  mutate(secondary_theme = factor(secondary_theme, levels = theme_order, ordered = TRUE))
+
+# Ordering Studies by theme, year, targets and scales
+study_list_order <- study_list %>% 
+  rowwise() %>%
+  mutate(scale_wwtp = ifelse("WWTP" %in% spatial_scale, 1, 0), 
+         scale_nh = ifelse("Neighborhood/ Sewerhole" %in% spatial_scale, 1, 0),
+         scale_building = ifelse("Building Level" %in% spatial_scale, 1, 0), 
+         target_covid = ifelse("SARS-CoV-2" %in% targets, 1, 0), 
+         target_illicit = ifelse("Illicit Drug Use" %in% targets, 1, 0), 
+         target_prescript = ifelse("Prescription Drugs" %in% targets, 1, 0)) %>% 
+  ungroup() %>%
+  dplyr::select(primary_theme, study, year_cat, 
+                empirical_study, 
+                motivation_health_equity,
+                mult, mult_targ, 
+                scale_wwtp, scale_nh,scale_building, 
+                target_covid, target_illicit, target_prescript
+                ) %>% 
+  arrange(primary_theme, 
+          desc(year_cat), 
+         # empirical_study, 
+         #motivation_health_equity,
+          mult_targ, 
+          target_covid, target_illicit, target_prescript, 
+          mult, 
+         scale_wwtp, scale_nh, scale_building, 
+
+          ) %>% pull(study)
+
+# Ordering Studies, but keeping keys to join w/ spatial scale and target data
+study_list <- study_list %>% mutate(study = factor(study, levels = study_list_order, ordered = TRUE))
+study_key <- study_list %>% dplyr::select(id, study)%>% arrange(id)
+
+# Spatial Scale and Target
+study_list_scales <- at_scale %>% 
+  left_join(study_key, by  = "id") %>%
+  mutate(primary_theme = factor(primary_theme, levels = theme_order, ordered = TRUE)) %>%
+  mutate(study = factor(study, levels = study_list_order, ordered = TRUE))
+
+study_list_targets <- at_targets %>% 
+  left_join(study_key, by  = "id") %>%
+  mutate(primary_theme = factor(primary_theme, levels = theme_order, ordered = TRUE)) %>%
+  mutate(study = factor(study, levels = study_list_order, ordered = TRUE))
+
+# Creating Long Dataset for Heatmap by Each variable
+# YEAR
+study_year <- study_list %>%
+  mutate(year_cat = ifelse(year<2020, "2012-2019", "2020-2023")) %>%
+  #mutate(year_cat = cut_width(year,2)) %>%
+  mutate(var = "Year", value = year_cat)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% arrange(value) %>% ungroup() 
+
+# EMPIRICAL?
+study_empirical <- study_list %>% 
+  filter(empirical_study=="Yes") %>%
+  mutate(var = "Empirical?", value = empirical_study)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() 
+
+# Health Equity Motivated?
+study_motive <- study_list %>% 
+  filter(motivation_health_equity=="Yes") %>%
+  mutate(var = "Health Eq.\nMotiv.?", value = motivation_health_equity)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() 
+
+# LOCATION
+study_country <- study_list %>% 
+  mutate(var = "Country/\nLocation", value = "Location", text = country)%>% 
+  group_by(primary_theme, study, var, value, text) %>% summarise(n = n()) %>% ungroup() 
+
+# SECONDARY THEME
+study_sec_theme <- study_list %>% 
+  filter(!is.na(secondary_theme)) %>% 
+  mutate(var = "Secondary\nTheme", value = secondary_theme)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% arrange(value) %>% ungroup() 
+
+# SCALE
+study_multi_scale <-study_list %>%
+  mutate(mult = ifelse(multi_scale %in% c("Single Scale"), "No", "Yes")) %>%
+  filter(mult == "Yes") %>% 
+  mutate(var = "Multiple\nScales?", value = mult)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() 
+
+study_scale <-study_list_scales %>%
+  mutate(var = "Spatial\nScale", value = spatial_scale)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() %>%
+  group_by(value) %>% mutate(n_group = n()) %>% arrange(desc(n_group)) %>% ungroup()
+
+# TARGETS
+study_multi_target <-study_list %>%
+  mutate(mult = ifelse(multi_target %in% c("Single Target"), "No", "Yes")) %>%
+  filter(mult == "Yes") %>% 
+  mutate(var = "Multiple\nTargets?", value = mult)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() 
+
+# Getting Common targets (n>9 studies) which will be named, grouping others into a separate group "other"
+common_targets <- study_list_targets %>% group_by(targets) %>% summarise(n_studies = n()) %>% arrange(desc(n_studies)) %>% 
+  filter(n_studies>9) %>% pull(targets)
+
+study_target <- study_list_targets %>%
+  mutate(target_cat = ifelse(targets %in% common_targets, targets, "Other")) %>% 
+  mutate(var = "Targets", value = target_cat)%>% 
+  group_by(primary_theme, study, var, value) %>% summarise(n = n()) %>% ungroup() %>%
+  group_by(value) %>% mutate(n_group = ifelse(value == "Other",-99,n())) %>% arrange(desc(n_group)) %>% ungroup()
+
+
+# Combining each variable dataset to panel heatmap
+study_theme_dat <- bind_rows(study_country, study_year,  study_empirical, 
+                             study_motive,
+                             study_multi_target, study_target,
+                             study_multi_scale, study_scale,  
+                             study_sec_theme) %>% 
+  mutate(sym = ifelse(var %in% c("Country/\nLocation"), NA, "Check"))
+
+# Color Palette
+var_order <- study_theme_dat %>% pull(var) %>% unique() # Order of Variable (Rows)
+val_order <- study_theme_dat %>% pull(value) %>% unique() # Order of Values within Variables, X-axis labels
+no_color <- c("Location", "Yes", "Other")
+
+color_join <- study_theme_dat %>% 
+  mutate(var = factor(var, levels = var_order, ordered = TRUE), 
+         value = factor(value, levels = val_order, ordered = TRUE)) %>%
+  group_by(var, value) %>% summarise(n=n()) %>% mutate(row_num = row_number()) %>%
+  group_by(var) %>% mutate(max_n = n()) %>%
+  rowwise() %>%
+  mutate(val_color = "grey50") %>%
+  
+  mutate(val_color = ifelse(var %in% c("Year"), pal[row_num], val_color)) %>%
+  mutate(val_color = ifelse(var %in% c("Health Eq.\nMotiv.?"), pal[row_num], val_color)) %>%
+  mutate(val_color = ifelse(var %in% c("Targets"), pal[row_num], val_color)) %>%
+  mutate(val_color = ifelse(var %in% c("Spatial\nScale", "Secondary\nTheme"), pal[row_num+add*1], val_color)) %>%
+  mutate(val_color = ifelse(var %in% c("Secondary\nTheme"), pal[row_num+add*2], val_color)) %>%
+
+  mutate(val_color = ifelse(value %in% no_color, "grey50", val_color)) %>%
+  ungroup() %>%
+  dplyr::select(var, value, val_color) 
+
+
+#color_join %>% pull(val_color) %>% scales::show_col() # to view scale, uncomment
+
+# Markdown text to color axis labels
+study_theme_dat <- study_theme_dat %>% mutate(var = factor(var, levels = var_order, ordered = TRUE), 
+                                              value = factor(value, levels = val_order, ordered = TRUE)) %>%
+  left_join(color_join, by = c("var","value")) %>%
+  mutate(markdown_val = glue("<span style='color:{val_color}'>{value}</span>")) #%>%
+  #mutate(study = factor(study, levels = new_study_order, ordered=TRUE)) 
+
+# Naming color pal with markdown text
+color_pal_df <- study_theme_dat %>% dplyr::select(markdown_val, val_color) %>% unique()
+color_pal <- color_pal_df$val_color
+names(color_pal) <- color_pal_df$markdown_val
+  
+# Format Themes for Panels
+theme_levs_breaks <- paste0("(",LETTERS[1:length(theme_order)], ") ", theme_order) # Adding Letters
+theme_levs_breaks <- str_wrap(theme_order, width = 16, whitespace_only = FALSE) # Break every 16 characters only at spaces
+theme_levs_breaks[theme_order=="Representativeness"] <- "(E)*" # Panel not big enough, relabelling w/ only letter and include caption
+
+# Function to revise theme names across primary and secondary themes
+theme_rev <- function(x, orig_themes = theme_order, new_themes){
+  ind <- which(orig_themes == x)
+  rev_theme <- new_themes[ind]
+  return(rev_theme)
+  }
+
+heat_map <- study_theme_dat %>% 
+  # Revised Formatted Themes and creating factor variables for plot
+  rowwise %>% mutate(across("primary_theme", ~theme_rev(.x, new_themes = theme_levs_breaks))) %>% ungroup() %>%
+  mutate(primary_theme = factor(primary_theme, levels = theme_levs_breaks, ordered = TRUE)) %>% 
+  mutate(markdown_val = factor(markdown_val, levels = color_pal_df$markdown_val, ordered=TRUE)) %>%
+  # Heatmap
+  ggplot(., aes(x = markdown_val, y = study)) + 
+    geom_point(size=3, aes(shape = factor(sym), color = markdown_val), alpha=0.5) + 
+    geom_point(size=1, aes(shape = factor(sym), color = markdown_val)) + 
+  # Adding Country Value
+    geom_label(aes(label=text), fontface = "bold", size = 2.75, label.padding = unit(0.1, "lines"), fill = "grey95", 
+               color = "black", label.size = 0) +
+    facet_grid(primary_theme ~ var, scales = "free", space = "free", as.table = TRUE) +
+    theme_light() + 
+    scale_shape_manual(values=c(15,NA), name="") +
+    scale_color_manual(values = color_pal) +
+    theme(axis.title = element_blank(), 
+            axis.text.y = element_text(face="italic", size = 8), 
+            panel.grid.major = element_line(color = "grey90", size = 0.2),
+           # axis.text.y = element_blank(), 
+            legend.position = "none", 
+            legend.text = element_markdown(),
+            axis.text.x = element_markdown(angle = 45, size = 8, vjust=1, hjust = 1, face = "bold"), 
+            strip.background = element_rect(fill= "grey90"), 
+            strip.text.x = element_text(face = "bold", hjust = 0.5, size = rel(0.9), angle = 0, color = "black"), 
+            strip.text.y =  element_text(face = "bold", hjust = 0.5, size = rel(0.96), color = "black"), 
+            ) + 
+    labs(caption = "*Theme: (E) Representativeness") +
+    force_panelsizes(cols = c(2,1.2,1.4, 1.4,1.25,2.5, 1.25,2,2.25))
+
+heat_map
+
+
+file_name <- paste0(Sys.Date(),"_heatmap")
+fn_jpeg <- paste0(file_name, ".jpeg")
+fn_pdf <- paste0(file_name, ".pdf")
+
+
+if(save_heatmap){
+  ggsave(here::here("output", fn_jpeg), heat_map, device = "jpeg", 
+       scale = 1.1, height = 12, width = 9, dpi = 800)
+  ggsave(here::here("output", fn_pdf), heat_map, device = "pdf", scale = 1.1, height = 12, width = 9)
+}
+```
+
+
+
+# Overall table
+
+```{r, results = 'asis'}
+# Save Tables?
+save_tables <- TRUE
+
+# Outputting clean table of all studies
+full_table <- at %>% rowwise() %>% 
+  mutate(n_targets = length(targets)) %>% 
+  mutate(targets = paste(targets, collapse = ",\n"), 
+         spatial_scale = paste(spatial_scale, collapse = "\n")) %>%
+  mutate(targets = ifelse(n_targets>4, "5+ Targets", targets)) %>%
+  #mutate(targets = linebreak(targets), spatial_scale = linebreak(spatial_scale)) %>%
+  mutate(secondary_theme = ifelse(is.na(secondary_theme), "None", secondary_theme)) %>%
+  mutate(primary_theme = factor(primary_theme, levels = theme_order, ordered = TRUE)) %>%
+  
+  left_join(study_key, by  = "id") %>%
+  mutate(primary_theme = factor(primary_theme, levels = theme_order, ordered = TRUE)) %>%
+  mutate(study = factor(study, levels = study_list_order, ordered = TRUE)) %>%
+  ungroup() %>%
+  group_by(primary_theme, secondary_theme) %>% 
+  mutate(n = n()) %>%
+#  arrange(primary_theme, desc(n)) %>%
+  arrange(primary_theme, desc(study)) %>%
+  dplyr::select(id, authors, year, country, title, empirical_study, motivation_health_equity, 
+                primary_theme, secondary_theme, targets, spatial_scale) 
+
+full_table_flex <- full_table %>% 
+  flextable() %>%
+  colformat_num(j = c("year"), digits = 1, big.mark="") %>% 
+  set_header_labels(., empirical_study = "Empirical?", 
+                    motivation_health_equity = "Primary Motiv.:\n Health Equity?", 
+                    primary_theme = "Primary Theme", 
+                    secondary_theme = "Secondary Theme", targets = "Targets", spatial_scale = "Spatial\nScale") %>%
+  #autofit() %>% 
+  fit_to_width(11) %>% theme_vanilla()
+
+# View Tables
+full_table_flex
+
+if(save_tables == TRUE){
+  # As Docx
+  read_docx() %>%
+    body_add_flextable(value = full_table_flex, split = TRUE) %>%
+    body_end_section_landscape() %>% # a landscape section is ending here
+    print( target = here::here("output",  "health_equity_review.docx"))
+  # as csv
+  write_csv(full_table, path = here("output", "health_equity_review.csv"))
+}
+
+
+
+```
+
